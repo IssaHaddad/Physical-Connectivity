@@ -1,0 +1,65 @@
+Code Description:
+
+The code works to build physical connectivty table for a customer network. It is used to build the connectivity table for a subset of the devices only within a customer network. lets say customer has 100 devices, and you are only interested in building a physical connectivity table for 50 of those devices to see how they are connected with each other only. code prints physical connectivity table to CSV files. Furthermoe this code helps Advanced services team in also building a physical topology diagram. How this is done, is basically the code can figure out how many links are going out per device to other deivces. This helps the engineer in building the topology by placing the devices with the most connection at the center of the diagram and devices with the least connections further to the border of the diagram.
+
+
+Code accepts:
+
+code accept one parent directory containg multiple directories reflecting the device names and within each device directory, there should be a "show cdp nieghbors detail file.
+
+
+e.g.
+
+ShowCDPfiles2
+
+	Device1
+		Show-cdp-ne-detail-file
+	Device2
+		Show-cdp-ne-detail-file
+	Device3
+		Show-cdp-ne-detail-file
+	Device4
+		Show-cdp-ne-detail-file
+
+
+
+To do:
+
+1) create driectory and sub files as shown above
+2) Chnage file path of your directory in the code and go through the comment.
+3) Change the string "files2" to match the last string in your directory name here: String [] filenamesegmented = directoryListing[i].toString().split("files2"); 
+3.1) Otherwise keep the directory name as is suggested: "ShowCDPfiles2"
+
+
+
+Considerations:
+
+different devices have different formats within the "show cdp ne detail" output. code looks at "Device ID", "Interface", and "Port ID (outgoing port)" entries within these show cdp neighbors files
+
+For example, 9912 devices have the following format -->
+
+Device ID: xxxxxxxxxxxxxxxx
+SysName : 
+Entry address(es): 
+  IPv4 address: xxx.xxx.xxx.xxx
+Platform: cisco WS-C3750X-24,  Capabilities: Switch IGMP 
+Interface: MgmtEth0/RP0/CPU0/0
+Port ID (outgoing port): GigabitEthernet2/0/1
+Holdtime : 156 sec
+
+
+while 7600, 6500, and 6800 devices have the following format ->
+
+Device ID: xxxxxxxxx
+Entry address(es): 
+  IP address: xxx.xxx.xxx.xxx
+Platform: cisco C9300-48P,  Capabilities: Switch IGMP 
+Interface: GigabitEthernet9/4,  Port ID (outgoing port): TenGigabitEthernet1/1/1
+Holdtime : 127 sec
+
+
+Make sure you account for those differences in the code itself. The code should be properly commented to help in editing it.
+
+
+Hope its uselful, and free to contact me for any assistance, my cisco ID: Ishaddad
+
